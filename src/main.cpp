@@ -1,16 +1,11 @@
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
-#include <SDL3_image/SDL_image.h>
-#include <SDL3_ttf/SDL_ttf.h>
+#include "Window.h"
 
 int main(int, char**) {
     SDL_Init(SDL_INIT_VIDEO);
 
-    SDL_Window* Window{SDL_CreateWindow(
-      "Hello Window", 800, 300, 0
-    )};
-    SDL_GetWindowSurface(Window);
-    SDL_UpdateWindowSurface(Window);
+    Window GameWindow;
 
     bool IsRunning = true;
     SDL_Event Event;
@@ -22,8 +17,6 @@ int main(int, char**) {
         }
     }
 
-    SDL_DestroyWindow(Window);
     SDL_Quit();
-
     return 0;
 }
