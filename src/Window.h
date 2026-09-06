@@ -12,7 +12,9 @@ public:
             800, 300,
             SDL_WINDOW_RESIZABLE | SDL_WINDOW_MINIMIZED
         );
+    }
 
+    void Render() {
         // 从 surface 获取到当前硬件表现像素颜色的格式信息
         const SDL_PixelFormatDetails* FmtDetails { SDL_GetPixelFormatDetails(GetSurface()->format) };
 
@@ -24,10 +26,13 @@ public:
         }
 
         // 创建一个红色颜色
-        Uint32 RedColor { SDL_MapRGB(FmtDetails, nullptr, 255, 0, 0) };
+        Uint32 RedColor { SDL_MapRGB(FmtDetails, nullptr, 50, 50, 50) };
 
         // 绘制到当前窗口的 surface 上
         SDL_FillSurfaceRect(GetSurface(), nullptr, RedColor);
+    }
+
+    void Update() {
         // 更新才能让绘制生效
         SDL_UpdateWindowSurface(SDLWindow);
     }

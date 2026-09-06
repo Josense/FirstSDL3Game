@@ -3,10 +3,13 @@
 #include "Window.h"
 
 int main(int, char**) {
+
+    // Initialization
     SDL_Init(SDL_INIT_VIDEO);
 
     Window GameWindow;
 
+    // Loop
     bool IsRunning = true;
     SDL_Event Event;
     while (IsRunning) {
@@ -15,8 +18,13 @@ int main(int, char**) {
                 IsRunning = false;
             }
         }
+
+        GameWindow.Render();
+
+        GameWindow.Update();
     }
 
+    // Shutdown
     SDL_Quit();
     return 0;
 }
