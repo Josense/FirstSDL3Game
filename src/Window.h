@@ -9,21 +9,24 @@ public:
         // 窗口名称、宽度、高度、窗口可调整大小且可最小化
         SDLWindow = SDL_CreateWindow(
             "Hello Window",
-            800, 300,
+            GetWidth(), GetHeight(),
             SDL_WINDOW_RESIZABLE | SDL_WINDOW_MINIMIZED
         );
     }
+
+    int GetWidth() const { return 800; }
+    int GetHeight() const { return 300; }
 
     void Render() {
         // 从 surface 获取到当前硬件表现像素颜色的格式信息
         const SDL_PixelFormatDetails* FmtDetails { SDL_GetPixelFormatDetails(GetSurface()->format) };
 
         //判断格式是否支持 alpha 通道
-        if (FmtDetails->Amask) {
-            std::cout << "Alpha is Supported" << std::endl;
-        } else {
-            std::cout << "No Alpha Supported" << std::endl;
-        }
+        // if (FmtDetails->Amask) {
+        //     std::cout << "Alpha is Supported" << std::endl;
+        // } else {
+        //     std::cout << "No Alpha Supported" << std::endl;
+        // }
 
         // 创建一个红色颜色
         Uint32 RedColor { SDL_MapRGB(FmtDetails, nullptr, 50, 50, 50) };
