@@ -1,5 +1,7 @@
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
+
+#include "Rectangle.h"
 #include "Window.h"
 
 void HandleMotionEvent(SDL_MouseMotionEvent& Event, Window& GameWindow) {
@@ -34,12 +36,14 @@ int main(int, char**) {
     SDL_Init(SDL_INIT_VIDEO);
 
     Window GameWindow;
+    Rectangle Rect { Rectangle(SDL_Rect{50, 50, 50, 50}, SDL_GetPixelFormatDetails(GameWindow.GetSurface()->format))};
 
     // Loop
     bool IsRunning = true;
     SDL_Event Event;
     while (IsRunning) {
         while (SDL_PollEvent(&Event)) {
+            Rect.HandleEvent(Event);
             if (Event.type == SDL_EVENT_MOUSE_MOTION) {
                 HandleMotionEvent(Event.motion, GameWindow);
             } else if (Event.type == SDL_EVENT_WINDOW_MOUSE_ENTER) {
@@ -54,7 +58,7 @@ int main(int, char**) {
         }
 
         GameWindow.Render();
-
+        Rect.Render(GameWindow.GetSurface());
         GameWindow.Update();
     }
 
