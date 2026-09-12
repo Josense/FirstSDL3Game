@@ -6,13 +6,14 @@
 
 class Rectangle {
 public:
-    Rectangle(const SDL_Rect& Rect, const SDL_PixelFormatDetails* Fmt) :
-    Rect {Rect},
-    mColor {SDL_MapRGB(Fmt, nullptr, 255, 0, 0) } {}
+    Rectangle(const SDL_Rect& Rect): Rect {Rect} {}
 
     void Render(SDL_Surface* Surface) const {
         const auto* Fmt = SDL_GetPixelFormatDetails(Surface->format);
-        SDL_FillSurfaceRect(Surface, &Rect, isPointerHovering ? mHoverColor : mColor);
+        const Uint32 Color = isPointerHovering
+            ? SDL_MapRGB(Fmt, nullptr, mHoverColor.r, mHoverColor.g, mHoverColor.b)
+            : SDL_MapRGB(Fmt, nullptr, mColor.r, mColor.g, mColor.b);
+        SDL_FillSurfaceRect(Surface, &Rect, Color);
     }
 
     void HandleEvent(const SDL_Event& Event) {
@@ -27,20 +28,20 @@ public:
         }
     }
 
-    void SetColor(const Uint32 color) {
+    void SetColor(const SDL_Color color) {
         mColor = color;
     }
 
-    [[nodiscard]] Uint32 GetColor() const { return mColor; }
+    [[nodiscard]] SDL_Color GetColor() const { return mColor; }
 
-    void SetHoverColor(const Uint32 color) { mHoverColor = color; }
+    void SetHoverColor(const SDL_Color color) { mHoverColor = color; }
 
-    [[nodiscard]] Uint32 GetHoverColor() const { return mHoverColor; }
+    [[nodiscard]] SDL_Color GetHoverColor() const { return mHoverColor; }
 
 private:
     SDL_Rect Rect;
-    Uint32 mColor;
-    Uint32 mHoverColor;
+    SDL_Color mColor { SDL_Color {255, 0, 0, 255 } };
+    SDL_Color mHoverColor { SDL_Color {0, 255, 0, 255 } };
     bool isPointerHovering { false };
 
     [[nodiscard]] bool isWithinRect(int x, int y) const {
