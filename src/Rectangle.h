@@ -1,12 +1,12 @@
 #pragma once
-#include <iostream>
-
 #include "SDL3/SDL_surface.h"
-
+#include "SDL3/SDL_events.h"
 
 class Rectangle {
 public:
     Rectangle(const SDL_Rect& Rect): Rect {Rect} {}
+
+    virtual ~Rectangle() = default;
 
     void Render(SDL_Surface* Surface) const {
         const auto* Fmt = SDL_GetPixelFormatDetails(Surface->format);
@@ -16,14 +16,27 @@ public:
         SDL_FillSurfaceRect(Surface, &Rect, Color);
     }
 
+    virtual void OnMouseEnter() {}
+    virtual void OnMouseExit() {}
+    virtual void OnLeftClick() {}
+
     void HandleEvent(const SDL_Event& Event) {
         if (Event.type == SDL_EVENT_MOUSE_MOTION) {
+            bool wasPointerHovering { isPointerHovering };
             isPointerHovering = isWithinRect(static_cast<int>(Event.motion.x), static_cast<int>(Event.motion.y));
+            if (wasPointerHovering && !isPointerHovering) {
+                OnMouseExit();
+            } else if (!wasPointerHovering && isPointerHovering) {
+                OnMouseEnter();
+            }
         } else if (Event.type == SDL_EVENT_WINDOW_MOUSE_LEAVE) {
+            if (isPointerHovering) {
+                OnMouseExit();
+            }
             isPointerHovering = false;
         } else if (Event.type == SDL_EVENT_MOUSE_BUTTON_DOWN) {
             if (isPointerHovering && Event.button.button == SDL_BUTTON_LEFT) {
-                std::cout << "A left-click happened on me!" << std::endl;
+                OnLeftClick();
             }
         }
     }

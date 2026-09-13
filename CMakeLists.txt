@@ -13,7 +13,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/$<CONFIGURATION>")
 
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/$<CONFIGURATION>")
 
-add_executable(FirstSDL3Game src/main.cpp)
+add_executable(FirstSDL3Game src/main.cpp
+        src/Button.cpp)
 
 if(APPLE)
     set_target_properties(FirstSDL3Game PROPERTIES

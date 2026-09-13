@@ -1,5 +1,4 @@
 #pragma once
-#include <MacTypes.h>
 
 #include "SDL3/SDL_pixels.h"
 #include "SDL3/SDL_rect.h"
