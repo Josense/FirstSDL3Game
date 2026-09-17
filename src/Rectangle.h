@@ -20,7 +20,7 @@ public:
     virtual void OnMouseExit() {}
     virtual void OnLeftClick() {}
 
-    void HandleEvent(const SDL_Event& Event) {
+    virtual void HandleEvent(const SDL_Event& Event) {
         if (Event.type == SDL_EVENT_MOUSE_MOTION) {
             bool wasPointerHovering { isPointerHovering };
             isPointerHovering = isWithinRect(static_cast<int>(Event.motion.x), static_cast<int>(Event.motion.y));

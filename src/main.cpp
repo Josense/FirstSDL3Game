@@ -46,13 +46,13 @@ int main(int, char**) {
         while (SDL_PollEvent(&Event)) {
             UIManager.HandleEvent(Event);
             if (Event.type == SDL_EVENT_MOUSE_MOTION) {
-                HandleMotionEvent(Event.motion, GameWindow);
+                // HandleMotionEvent(Event.motion, GameWindow);
             } else if (Event.type == SDL_EVENT_WINDOW_MOUSE_ENTER) {
-                std::cout << "Mouse Entered Window" << std::endl;
+                // std::cout << "Mouse Entered Window" << std::endl;
             } else if (Event.type == SDL_EVENT_WINDOW_MOUSE_LEAVE) {
-                std::cout << "Mouse Left Window" << std::endl;
+                // std::cout << "Mouse Left Window" << std::endl;
             } else if (Event.type == SDL_EVENT_MOUSE_BUTTON_DOWN || Event.type == SDL_EVENT_MOUSE_BUTTON_UP) {
-                HandleButtonEvent(Event.button);
+                // HandleButtonEvent(Event.button);
             } else if (Event.type == SDL_EVENT_QUIT) {
                 IsRunning = false;
             }
